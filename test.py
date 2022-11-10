@@ -4,11 +4,12 @@ import requests
 myWGappID = "9f2c3f9953a1084d88f94ca9ff78c06e"
 
 """
+NFUA
 https: // api.worldofwarships.eu/wows/clans/list /?application_id = 9f2c3f9953a1084d88f94ca9ff78c06e & fields = clan_id % 2Ctag & search ='+clantag
 https: // api.worldofwarships.eu/wows/clans/accountinfo /?application_id = 9f2c3f9953a1084d88f94ca9ff78c06e & account_id = '+str(member)+' & extra = clan & fields = clan.tag
 https: // clans.worldofwarships.eu/api/encyclopedia/vehicles_info /?lang = ru
 https: // api.worldofwarships.eu/wows/clans/list /?application_id = 9f2c3f9953a1084d88f94ca9ff78c06e & search = '+clantag+' & fields = clan_id % 2C+tag
-https: // api.worldofwarships.eu/wows/clans/info /?application_id = 9f2c3f9953a1084d88f94ca9ff78c06e & clan_id = '+clan_id+' & extra = members
+https://api.worldofwarships.eu/wows/clans/info/?application_id=9f2c3f9953a1084d88f94ca9ff78c06e&clan_id=+clan_id+&extra=members
 https: // clans.worldofwarships.eu/api/members/'+clan_id+'/
 https: // clans.worldofwarships.eu/api/members/428592/
 """
@@ -35,11 +36,20 @@ class playerInfo:
     # strukt
     def __init__(self, value):
         self.namePlayer = value
-
+        
+        
+def get_clan_members(clan_id)
+    x = requests.get('https://api.worldofwarships.eu/wows/clans/info/?application_id=9f2c3f9953a1084d88f94ca9ff78c06e&clan_id='+clan_id+'&extra=members')
+        
+def get_clan_id(clantag)
+    x = requests.get('https://api.worldofwarships.eu/wows/clans/list/?application_id=9f2c3f9953a1084d88f94ca9ff78c06e&fields=clan_id%2Ctag&search='+clantag)
+    result  x.get('data').get('clan_id')
 
 def main():
-    x = requests.get(
-        'https://clans.worldofwarships.eu/api/encyclopedia/vehicles_info/?lang=ru')
+    #x = requests.get('https://clans.worldofwarships.eu/api/encyclopedia/vehicles_info/?lang=ru')
+    clantag = 'NFUA'
+    clan_id = '500229722'
+    x = requests.get('https://api.worldofwarships.eu/wows/clans/list/?application_id=9f2c3f9953a1084d88f94ca9ff78c06e&fields=clan_id%2Ctag&search='+clantag)
     print(x.text)
 
 
