@@ -1,11 +1,11 @@
 from aiogram import F, Router, types
 
-import keybuild as kb
+from keyboards import keybuild as kb
 import text
 
 from aiogram.filters import CommandStart, Command, CommandObject
+from aiogram.utils.keyboard import ReplyKeyboardBuilder
 from aiogram.types import Message
-from aiogram.utils.markdown import hbold
 
 from utils import get_id_by_name
 
@@ -25,7 +25,13 @@ async def command_start_handler(message: Message) -> None:
     """
     This handler receives messages with `/start` command
     """
-    await message.answer(f"{text.greet}{hbold(message.from_user.full_name)}!")
+    builder = ReplyKeyboardBuilder()
+    builder.add(types.KeyboardButton(text="EU"))
+    builder.add(types.KeyboardButton(text="NA"))
+    builder.add(types.KeyboardButton(text="ASIA"))
+    builder.adjust(3)
+
+    await message.answer(f"{text.key_gegion}", reply_markup=builder.as_markup(resize_keyboard=True))
 
 
 @router.message(Command('stat'))
@@ -39,6 +45,12 @@ async def get_my_stat(message: Message, command: CommandObject) -> None:
         await message.answer(f"Need your game name")
 
 
+@router.message(F.text.lower() == "EU")
+async def with_puree(message: types.Message):
+
+    await message.reply("Виконати реєстрацію", reply_markup=types.ReplyKeyboardRemove())
+
+
 @router.message(Command('Допомога'))
 async def get_my_stat(message: Message) -> None:
     """
@@ -46,6 +58,7 @@ async def get_my_stat(message: Message) -> None:
     """
 
     await message.answer(f" send /stat and your wows name")
+
 
 @router.message()
 async def echo_handler(message: types.Message) -> None:
